@@ -1,0 +1,101 @@
+:host {
+    display: block;
+    margin-top: 16px;
+
+    .container {
+        display: block;
+        width: 100%;
+        overflow: hidden;
+
+        .scroll {
+            overflow: auto;
+
+            table {
+                border-collapse: collapse;
+                width: 100%;
+
+                th {
+                    color: #000000;
+                    font-weight: 600;
+                }
+
+                td,
+                th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    padding: 8px;
+                    vertical-align: middle;
+
+                    &:first-child {
+                        div {
+                            display: inline-block;
+                            vertical-align: text-top;
+                        }
+                    }
+
+                    div {
+                        cursor: pointer;
+                        padding-left: 10px;
+                        max-width: 160px;
+                        overflow: hidden;
+                        display: block;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        line-height: 1.2;
+
+                        input[type=color] {
+                            border: none;
+                            box-shadow: none;
+                            width: 25px;
+                            height: 20px;
+                            background: #fff;
+                            padding: 0;
+                        }
+                    }
+                }
+            }
+
+            .not-found {
+                display: block;
+                text-align: center;
+                font-size: 16px;
+            }
+        }
+    }
+
+    .pagination-container {
+        display: flex;
+        margin-top: 20px;
+        justify-content: space-between;
+
+        .total {
+            font-size: 16px;
+        }
+
+        .pagination {
+            display: flex;
+
+            .active-page {
+                background-color: #0071ff;
+                color: #ffffff !important;
+            }
+
+            .disabled {
+                background-color: lightgray;
+                cursor: not-allowed !important;
+            }
+
+            .pagination-button {
+                user-select: none;
+                border: 1px solid lightgray;
+                cursor: pointer;
+                padding: 8px 16px;
+                color: gray;
+            }
+
+            :hover {
+                background-color: lightgray;
+            }
+        }
+    }
+}

@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="scroll">
+    <table *ngIf="data?.length;else noData">
+      <thead>
+        <tr>
+          <ng-container *ngFor="let col of columns; let i = index">
+            <th *ngIf="col.isEnable" title=" {{col.columnName}}">
+              <input *ngIf="i ===0" [checked]="isSelectAll" type="checkbox" (click)="selectAll($event.target.checked)"
+                id="head">
+              <label *ngIf="i ===0" for="head"></label>
+              <div>
+                {{col.columnName}}
+              </div>
+            </th>
+          </ng-container>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of data;let i= index">
+          <ng-container *ngFor="let col of columns; let j = index">
+            <td *ngIf="col.isEnable" title="{{row[col.key]}}">
+              <ng-container *ngIf="col.key !== 'imagePath' && col.key !== 'hashCode'">
+                <input *ngIf="j ===0" [(ngModel)]="selectedItems[row.id]" type="checkbox"
+                  (click)="selectRow($event.target.checked, row.id)" id="{{ 'select' + i}}">
+                <label *ngIf="j ===0" for="{{ 'select' + i}}"></label>
+                <div (click)="j ===0 ? click(row) : ''">
+                  {{row[col.key]}}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="col.key === 'imagePath'">
+                <img height="30" src="{{row[col.key]}}" alt="">
+              </ng-container>
+              <ng-container *ngIf="col.key === 'hashCode'">
+                <div>
+                  <input type="color" value="{{row[col.key]}}" disabled>
+                  {{row[col.key]}}
+                </div>
+              </ng-container>
+            </td>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noData>
+      <div class="not-found">
+        No data available
+      </div>
+    </ng-template>
+  </div>
+</div>
+<div class="pagination-container" *ngIf="data?.length">
+  <div class="total" *ngIf="data?.length">Total : {{totalItems || 1}}</div>
+  <ul class="pagination">
+    <li class="pagination-button" [class.disabled]="pageNo ===1" appDebounceClick
+      (debounceClick)=" pageNo ===1 ? '' : goToPage('pre')">
+      Prevoius
+    </li>
+    <ng-container *ngFor="let tabs of paginationTabs">
+      <li class="pagination-button" *ngIf="tabs.key <= getTotalPageCount()"
+        [class.active-page]="tabs.key === pageNo.toString()" appDebounceClick
+        (debounceClick)="pageNo.toString() === tabs.key ? '' : goToPage(tabs.key)">
+        {{tabs.label}}
+      </li>
+    </ng-container>
+    <li class="pagination-button" [class.disabled]="data?.length < limit || data?.length === totalItems"
+      appDebounceClick (debounceClick)="data?.length < limit ? '' : goToPage('next')">
+      Next
+    </li>
+  </ul>
+</div>
